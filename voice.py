@@ -131,7 +131,7 @@ def get_name_by_phone(phone: str) -> str:
 @app.post("/call-all")
 async def call_all():
     for lead in LEADS:
-        signalwireClient.calls.create(
+        signalwire_client.calls.create(  # Fixed typo: signalwire_client
             to=lead["phone"],
             from_=SIGNALWIRE_FROM_NUMBER,
             url=f"https://{PUBLIC_HOST}/voice?phone={quote(lead['phone'])}"
@@ -141,6 +141,7 @@ async def call_all():
 
 @app.post("/voice")
 async def voice(request: Request, phone: str = Query(...)):
+    # REAL AI CODE - Uses <Stream> tag
     return Response(
         f"""<Response><Answer/><Connect><Stream url="wss://{PUBLIC_HOST}/media" bidirectional="true"/></Connect></Response>""",
         media_type="application/xml"
