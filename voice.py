@@ -141,8 +141,9 @@ async def call_all():
 
 @app.post("/voice")
 async def voice(request: Request, phone: str = Query(...)):
+    # This is a TEST to see if SignalWire reaches your server at all
     return Response(
-        f"""<Response><Answer/><Connect><Stream url="wss://{PUBLIC_HOST}/media" bidirectional="true"/></Connect></Response>""",
+        f"""<Response><Say>Hi friend. If you hear this, your server is connected.</Say></Response>""",
         media_type="application/xml"
     )
 
