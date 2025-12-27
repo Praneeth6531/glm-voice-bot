@@ -131,7 +131,7 @@ def get_name_by_phone(phone: str) -> str:
 @app.post("/call-all")
 async def call_all():
     for lead in LEADS:
-        signalwire_client.calls.create(
+        signalwireClient.calls.create(
             to=lead["phone"],
             from_=SIGNALWIRE_FROM_NUMBER,
             url=f"https://{PUBLIC_HOST}/voice?phone={quote(lead['phone'])}"
@@ -141,9 +141,8 @@ async def call_all():
 
 @app.post("/voice")
 async def voice(request: Request, phone: str = Query(...)):
-    # This is a TEST to see if SignalWire reaches your server at all
     return Response(
-        f"""<Response><Say>Hi friend. If you hear this, your server is connected.</Say></Response>""",
+        f"""<Response><Answer/><Connect><Stream url="wss://{PUBLIC_HOST}/media" bidirectional="true"/></Connect></Response>""",
         media_type="application/xml"
     )
 
@@ -330,4 +329,3 @@ async def media(ws: WebSocket, phone: str = Query("unknown")):
 @app.get("/health")
 async def health():
     return {"status": "ok", "leads_loaded": len(LEADS)}
-
