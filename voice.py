@@ -146,7 +146,8 @@ async def voice(request: Request, phone: str = Query(...)):
 <Response>
   <Answer/>
   <Connect>
-    <Stream url="wss://{PUBLIC_HOST}/media?phone={quote(phone)}" bidirectional="true"/>
+    <!-- Simplified URL to fix SignalWire connection issues -->
+    <Stream url="wss://{PUBLIC_HOST}/media" bidirectional="true"/>
   </Connect>
 </Response>
 """,
