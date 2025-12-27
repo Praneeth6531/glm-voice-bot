@@ -142,15 +142,7 @@ async def call_all():
 @app.post("/voice")
 async def voice(request: Request, phone: str = Query(...)):
     return Response(
-        f"""
-<Response>
-  <Answer/>
-  <Connect>
-    <!-- Simplified URL to fix SignalWire connection issues -->
-    <Stream url="wss://{PUBLIC_HOST}/media" bidirectional="true"/>
-  </Connect>
-</Response>
-""",
+        f"""<Response><Answer/><Connect><Stream url="wss://{PUBLIC_HOST}/media" bidirectional="true"/></Connect></Response>""",
         media_type="application/xml"
     )
 
